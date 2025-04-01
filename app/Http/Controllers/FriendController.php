@@ -18,19 +18,17 @@ class FriendController extends Controller
         //     $request->user()->to()->where('from_id', $user->id)->exists()
 
         //  );
-        $is_from = $request->user()->from()->where('to_id', $user->id)->exists();
-        $is_to = $request->user()->to()->where('from_id', $user->id)->exists();
+       // $is_from = $request->user()->from()->where('to_id', $user->id)->exists();
+       // $is_to = $request->user()->to()->where('from_id', $user->id)->exists();
 
-        if($is_from || $is_to){
+      
+        if(!$request->user()->isRelated($user)){
             
-            return back();
+            $request->user()->from()->attach($user);
         }
-        if($request->user()->id === $user->id){
-            return back();
-        }
-     $request->user()->from()->attach($user);
-     return back();
     }
+    
+  
 
 
     public function update(Request $request, User $user)
