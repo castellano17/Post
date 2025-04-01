@@ -35,5 +35,8 @@ RUN chown -R www-data:www-data /var/www/html \
 RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - \
 && apt-get install -y nodejs
 
-# Instala dependencias frontend
+# Copia los archivos package.json y tailwind.config.js antes
+COPY package.json vite.config.js tailwind.config.js postcss.config.js ./
+
+# Instala dependencias JS y genera build
 RUN npm install && npm run build
