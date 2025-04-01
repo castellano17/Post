@@ -8,9 +8,8 @@
      class="w-full mb-2 p-0 text-white bg-transparent border-0 border-b-2 border-slate-800 focus:border-b-slate-700 focus:ring-0 resize-none overflow-hidden"
      placeholder="Write something..." 
      ></textarea>
-    <input type='submit'
-    class="px-4 py-2 bg-yellow-400 text-gray-800 font-semibold rounded-md hover:bg-yellow-500 transition-colors duration-200"
-   />
+   
+   <x-submit-button>Submit</x-submit-button>
   </form>
 
 
