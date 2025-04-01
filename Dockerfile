@@ -7,12 +7,15 @@ RUN apt-get update && apt-get install -y \
 
 # Habilita Apache Rewrite
 RUN a2enmod rewrite
+RUN echo "DirectoryIndex index.php" >> /etc/apache2/apache2.conf
 
 # Copia el código
-COPY . /var/www/html
+COPY . /var/www
 
 # Establece directorio de trabajo
-WORKDIR /var/www/html
+WORKDIR /var/www
+
+RUN mv /var/www/public /var/www/html
 
 # Instala Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
