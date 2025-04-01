@@ -30,3 +30,10 @@ RUN composer install --no-dev --optimize-autoloader
 # Permisos
 RUN chown -R www-data:www-data /var/www/html \
     && chmod -R 755 /var/www/html/storage
+
+    # Instala Node.js
+RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - \
+&& apt-get install -y nodejs
+
+# Instala dependencias frontend
+RUN npm install && npm run build
