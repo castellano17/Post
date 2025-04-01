@@ -15,6 +15,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     Route::post('/posts', [PostController::class, 'store'])->name('posts.store');
+    Route::get('/profile/{user}', [PageController::class, 'profile'])->name('profile.show');
 });
 
 require __DIR__.'/auth.php';
