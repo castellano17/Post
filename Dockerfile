@@ -18,8 +18,10 @@ RUN echo "<VirtualHost *:80>" > /etc/apache2/sites-available/000-default.conf &&
 # Copia el código
 COPY . /var/www/html
 
-# Establece directorio de trabajo
 WORKDIR /var/www/html
+
+COPY package.json package-lock.json vite.config.js tailwind.config.js postcss.config.js ./
+COPY resources/ resources/
 
 # Instala Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
@@ -31,12 +33,8 @@ RUN composer install --no-dev --optimize-autoloader
 RUN chown -R www-data:www-data /var/www/html \
     && chmod -R 755 /var/www/html/storage
 
-    # Instala Node.js
+# Instala Node.js
 RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - \
 && apt-get install -y nodejs
 
-# Copia los archivos package.json y tailwind.config.js antes
-COPY package.json vite.config.js tailwind.config.js postcss.config.js ./
-
-# Instala dependencias JS y genera build
 RUN npm install && npm run build
