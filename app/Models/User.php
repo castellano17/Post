@@ -51,6 +51,15 @@ class User extends Authenticatable
         return $this->hasMany(Post::class);
     }
     //Relation
+    public function isRelated(User $user)
+    {
+        if(auth()->user()->id === $user->id) {
+            return true;
+        }
+        return $this->from()->where('to_id', $user->id)->exists() ||
+               $this->to()->where('from_id', $user->id)->exists();
+    }
+
     public function from()
     {
         return $this->belongsToMany(User::class, 'friends', 'from_id', 'to_id');
