@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: laravel-app
+    runtime: docker
+    plan: free
+    repo: https://github.com/tu-usuario/tu-repo # reemplaza con tu URL real
+    branch: main
+    dockerContext: ./
+    dockerfilePath: ./Dockerfile
+    autoDeploy: true
