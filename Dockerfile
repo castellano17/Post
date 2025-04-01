@@ -7,15 +7,19 @@ RUN apt-get update && apt-get install -y \
 
 # Habilita Apache Rewrite
 RUN a2enmod rewrite
-RUN echo "DirectoryIndex index.php" >> /etc/apache2/apache2.conf
+RUN echo "<VirtualHost *:80>" > /etc/apache2/sites-available/000-default.conf && \
+    echo "    DocumentRoot /var/www/html/public" >> /etc/apache2/sites-available/000-default.conf && \
+    echo "    <Directory /var/www/html/public>" >> /etc/apache2/sites-available/000-default.conf && \
+    echo "        AllowOverride All" >> /etc/apache2/sites-available/000-default.conf && \
+    echo "        Require all granted" >> /etc/apache2/sites-available/000-default.conf && \
+    echo "    </Directory>" >> /etc/apache2/sites-available/000-default.conf && \
+    echo "</VirtualHost>" >> /etc/apache2/sites-available/000-default.conf
 
 # Copia el código
-COPY . /var/www
+COPY . /var/www/html
 
 # Establece directorio de trabajo
-WORKDIR /var/www
-
-RUN mv /var/www/public /var/www/html
+WORKDIR /var/www/html
 
 # Instala Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
