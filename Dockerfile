@@ -38,3 +38,5 @@ RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - \
 && apt-get install -y nodejs
 
 RUN npm install && npm run build
+
+RUN ls -la public/build && chmod -R 755 public/buildRUN chmod -R 755 public/build
